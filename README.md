@@ -70,14 +70,21 @@ For users that are not familiar with `git`, [download the ZIP](https://github.co
 ## Usage
 
 > [!IMPORTANT]
-> Do not use RStudio nor Positron to run this project. It depends on the [`locator()`](https://rdrr.io/r/graphics/locator.html) function not supported by these two IDE.
+> Do not use RStudio or Positron to run this project. It depends on the [`locator()`](https://rdrr.io/r/graphics/locator.html) function not supported by these two IDE.
 
 - Open a Terminal (Windows user can open Git Bash)
-- Navigate to the `calcofi` project with the command `cd` 
 - Launch R by typing `R`
 - Install the `devtools`, `cli` and `recolorize` packages
+
+To run the project:
+
+- Navigate to `calcofi` directory by using `setwd()`
 - Load the project by running `devtools::load_all()`
 - Start digitalizing maps with `digitizer()`
+
+You will be ask to answer some question and click on the map. Just follow instructions.
+
+![screenshot](readme/screenshot.png)
 
 After digitalizing a first map, have a look at the `outputs/` directory: data should have been saved as a `csv` file.
 
