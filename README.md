@@ -63,7 +63,7 @@ To install this project:
 - [Fork](https://docs.github.com/en/get-started/quickstart/contributing-to-projects) this repository using the GitHub interface.
 - [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) your fork using `git clone fork-url` (replace `fork-url` by the URL of your fork). Alternatively, open [RStudio IDE](https://posit.co/products/open-source/rstudio/) and create a New Project from Version Control.
 
-For users that are not familiar with `git`, [download the ZIP](https://github.com/FRBCesab/calcofi/archive/refs/heads/main.zip) of the project.
+For users that are not familiar with `git`, [Download the ZIP](https://github.com/FRBCesab/calcofi/archive/refs/heads/main.zip) of the project.
 
 
 
