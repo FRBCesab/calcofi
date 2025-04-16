@@ -95,13 +95,13 @@ For the reporting of data values, two questions will be asked:
 
 2. Abundance classe
 
-- Type `0` for no individual per 1000m^3^ of water
-- Type `1` for 1-49 individuals per 1000m^3^ of water
-- Type `2` for 50-499 individuals per 1000m^3^ of water
-- Type `3` for 500-4,999 individuals per 1000m^3^ of water
-- Type `4` for 5,000-49,999 individuals per 1000m^3^ of water
-- Type `5` for 50,000-499,999 individuals per 1000m^3^ of water
-- Type `6` for > 500,000 individuals per 1000m^3^ of water
+- Type `0` for no individual per 1000m<sup>3</sup> of water
+- Type `1` for 1-49 individuals per 1000m<sup>3</sup> of water
+- Type `2` for 50-499 individuals per 1000m<sup>3</sup> of water
+- Type `3` for 500-4,999 individuals per 1000m<sup>3</sup> of water
+- Type `4` for 5,000-49,999 individuals per 1000m<sup>3</sup> of water
+- Type `5` for 50,000-499,999 individuals per 1000m<sup>3</sup> of water
+- Type `6` for > 500,000 individuals per 1000m<sup>3</sup> of water
 
 After digitalizing a first map, have a look at the `outputs/` directory: data should have been saved as a `csv` file (see the [example](https://github.com/FRBCesab/calcofi/blob/main/outputs/Example_of_Output.csv)).
 The name of the `csv` will be the same as the image.
