@@ -1,4 +1,4 @@
-# CalCOFI maps digitalization
+# CalCOFI maps digitalization <img src="https://raw.githubusercontent.com/FRBCesab/templates/main/logos/compendium-sticker.png" align="right" style="float:right; height:120px;"/>
 
 ![Compendium](https://img.shields.io/static/v1?message=Compendium&logo=r&labelColor=5c5c5c&color=yellowgreen&logoColor=white&label=%20)
 ![Lifecycle Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)
