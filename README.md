@@ -82,11 +82,13 @@ To run the project:
 - Load the project by running `devtools::load_all()`
 - Start digitalizing maps with `digitizer()`
 
-You will be ask to answer some question and click on the map. Just follow instructions.
+You will be ask to answer some questions and to click on the map. Just follow instructions.
 
 ![screenshot](readme/screenshot.png)
 
-After digitalizing a first map, have a look at the `outputs/` directory: data should have been saved as a `csv` file.
+After digitalizing a first map, have a look at the `outputs/` directory: data should have been saved as a `csv` file (see the [example](https://github.com/FRBCesab/calcofi/blob/main/outputs/Example_of_Output.csv)).
+The name of the `csv` will be the same as the image.
+
 
 ## Citation
 
