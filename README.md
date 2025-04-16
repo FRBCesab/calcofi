@@ -1,0 +1,1 @@
+# CalCOFI maps digitalization
