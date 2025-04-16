@@ -128,13 +128,13 @@ get_point_values <- function(points) {
   abundances <- NULL
   for (i in 1:nrow(points)) {
     points(points[i, "x"], points[i, "y"], cex = 1.5, col = "red")
-    cli::cli_alert_success("What is the color of the point? [(b)lack/(w)hite]")
+    cli::cli_alert_success("What is the color of the point? [(b)lack|(w)hite]")
     daynights <- c(
       daynights,
       readline(prompt = "    Answer: ")
     )
 
-    cli::cli_alert_success("What is the abundance class? [0/1/2/3/4/5]")
+    cli::cli_alert_success("What is the abundance class? [0|1|2|3|4|5|6]")
     abundances <- c(
       abundances,
       readline(prompt = "    Answer: ")
