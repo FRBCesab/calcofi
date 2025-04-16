@@ -1,6 +1,6 @@
 # CalCOFI maps digitalization
 
-![Package](https://img.shields.io/static/v1?message=Package&logo=r&labelColor=5c5c5c&color=yellowgreen&logoColor=white&label=%20)
+![Compendium](https://img.shields.io/static/v1?message=Compendium&logo=r&labelColor=5c5c5c&color=yellowgreen&logoColor=white&label=%20)
 ![Lifecycle Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)
 [![License GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
