@@ -1,5 +1,5 @@
 #' Interactive data digitalization
-#' 
+#'
 #' This function will:
 #'   - Import a `tiff` stored in the `data/` folder
 #'   - Plot the image
@@ -8,17 +8,21 @@
 #'   - Ask user to click on data points
 #'   - Ask user to extact point values
 #'   - Save data (`csv` file) in the `outputs/` folder
-#' 
+#'
 #' After this workflow completed for one image, the next image is loaded until
 #' all images are processed.
-#' 
+#'
 #' Note that when the output is created, the image is considered as processed.
-#' 
+#'
+#' @param day_night a `logical` of length 1. If `TRUE` (default), user will be
+#'   ask to select the color the point. Otherwise, this question will be
+#'   skipped.
+#'
 #' @return No return value.
-#' 
+#'
 #' @export
 
-digitizer <- function() {
+digitizer <- function(day_night = TRUE) {
   image_path <- "..."
 
   while (!is.null(image_path)) {
@@ -79,7 +83,7 @@ digitizer <- function() {
 
     points <- xy_to_lonlat(points, axes)
 
-    values <- get_point_values(points)
+    values <- get_point_values(points, day_night)
     values <- values[, -c(1:2)]
 
     values$"map" <- basename(image_path)

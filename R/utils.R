@@ -122,17 +122,27 @@ xy_to_lonlat <- function(points, axes) {
 #'
 #' @noRd
 
-get_point_values <- function(points) {
+get_point_values <- function(points, day_night = TRUE) {
   cat("\n")
   daynights <- NULL
   abundances <- NULL
   for (i in 1:nrow(points)) {
     points(points[i, "x"], points[i, "y"], cex = 1.5, col = "red")
-    cli::cli_alert_success("What is the color of the point? [(b)lack|(w)hite]")
-    daynights <- c(
-      daynights,
-      readline(prompt = "    Answer: ")
-    )
+
+    if (day_night) {
+      cli::cli_alert_success(
+        "What is the color of the point? [(b)lack|(w)hite]"
+      )
+      daynights <- c(
+        daynights,
+        readline(prompt = "    Answer: ")
+      )
+    } else {
+      daynights <- c(
+        daynights,
+        "b"
+      )
+    }
 
     cli::cli_alert_success("What is the abundance class? [0|1|2|3|4|5|6]")
     abundances <- c(
