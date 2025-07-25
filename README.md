@@ -85,7 +85,7 @@ To run the project:
 You will be ask to answer some questions and to click on the map. Just follow instructions.
 
 **NB:** By default, the argument `day_night` of the function `digitizer()` is set to `TRUE`:
-user will be ask to select the color the point. Otherwise, this question will be skipped.
+user will be asked to select the color the point. Otherwise, this question will be skipped.
 If points on the map are all black, use `digitizer(day_night = FALSE)`. If you have two colors,
 use `digitizer()` and you will be asked to select the color of the point.
 
