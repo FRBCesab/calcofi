@@ -39,7 +39,7 @@ The R function [`digitizer()`](https://github.com/FRBCesab/calcofi/blob/main/R/d
 - Ask user to extact point values
 - Save data (`.csv` file) in the [`outputs/`](https://github.com/FRBCesab/calcofi/tree/main/outputs) directory
 
-After this pipeline is completed for one image, the next image is automatically loaded until all images are processed.
+After this pipeline is completed for one image, the next image is automatically loaded until all images are processed (except if the argument `image` is not `NULL`).
 
 When the output (`.csv` file) is created, the image is considered as processed and it will never be imported again by `digitizer()`. Thus user can digitize maps over a long period.
 
