@@ -32,48 +32,136 @@ get_cruise_date <- function() {
 #'
 #' @noRd
 
+# locate_axes <- function() {
+#   corners <- c(
+#     "x-axis (left)",
+#     "x-axis (right)",
+#     "y-axis (bottom)",
+#     "y-axis (top)"
+#   )
+
+#   data <- data.frame()
+
+#   for (corner in corners) {
+#     cli::cli_alert("Click on the {.val {corner}}")
+#     coord <- locator(n = 1)
+
+#     axis <- unlist(lapply(strsplit(corner, "-"), function(x) x[1]))
+#     side <- unlist(lapply(strsplit(corner, " "), function(x) x[2]))
+#     pos <- ifelse(axis == "x", 1, 2)
+
+#     tmp <- data.frame(
+#       "axis" = axis,
+#       "side" = side,
+#       "coord" = coord[[pos]]
+#     )
+
+#     data <- rbind(data, tmp)
+#   }
+
+#   cat("\n")
+#   answers <- NULL
+#   for (corner in corners) {
+#     cli::cli_alert_success("What is the value of the {.val {corner}}?")
+#     answers <- c(
+#       answers,
+#       readline(prompt = "    Answer: ")
+#     )
+#   }
+
+#   data$"value" <- answers
+#   data$"side" <- gsub("\\(|\\)", "", data$"side")
+
+#   data[1:2, "value"] <- paste0("-", data[1:2, "value"])
+#   data$"value" <- gsub("--", "-", data$"value")
+
+#   data
+# }
+
+#' Click on map for axes
+#'
+#' @noRd
+
 locate_axes <- function() {
-  corners <- c(
-    "x-axis (left)",
-    "x-axis (right)",
-    "y-axis (bottom)",
-    "y-axis (top)"
-  )
+  axes <- c("x-axis (longitude)", "y-axis (latitude)")
 
   data <- data.frame()
 
-  for (corner in corners) {
-    cli::cli_alert("Click on the {.val {corner}}")
-    coord <- locator(n = 1)
+  for (axe in axes) {
+    cli::cli_alert(
+      "Click on several ticks along the {.val {axe}} (right click to stop)"
+    )
 
-    axis <- unlist(lapply(strsplit(corner, "-"), function(x) x[1]))
-    side <- unlist(lapply(strsplit(corner, " "), function(x) x[2]))
+    coord <- locator()
+
+    axis <- unlist(lapply(strsplit(axe, "-"), function(x) x[1]))
+    side <- unlist(lapply(strsplit(axe, " "), function(x) x[2]))
     pos <- ifelse(axis == "x", 1, 2)
 
+    dim_2 <- coord[[-pos]][1]
     tmp <- data.frame(
       "axis" = axis,
-      "side" = side,
-      "coord" = coord[[pos]]
+      "coord" = coord[[pos]],
+      "value" = NA
     )
+
+    for (i in 1:nrow(tmp)) {
+      if (pos == 1) {
+        text(
+          x = tmp[i, "coord"],
+          y = dim_2,
+          label = "|",
+          col = "red",
+          font = 2,
+          xpd = TRUE
+        )
+      } else {
+        text(
+          x = dim_2,
+          y = tmp[i, "coord"],
+          label = "--",
+          col = "red",
+          font = 2,
+          xpd = TRUE
+        )
+      }
+
+      cli::cli_alert_success("What is the value of the tick?")
+      tmp[i, "value"] <- readline(prompt = "    Answer: ")
+
+      if (pos == 1) {
+        text(
+          x = tmp[i, "coord"],
+          y = dim_2,
+          label = "|",
+          col = "white",
+          font = 2,
+          xpd = TRUE
+        )
+      } else {
+        text(
+          x = dim_2,
+          y = tmp[i, "coord"],
+          label = "--",
+          col = "white",
+          font = 2,
+          xpd = TRUE
+        )
+      }
+    }
 
     data <- rbind(data, tmp)
   }
 
-  cat("\n")
-  answers <- NULL
-  for (corner in corners) {
-    cli::cli_alert_success("What is the value of the {.val {corner}}?")
-    answers <- c(
-      answers,
-      readline(prompt = "    Answer: ")
-    )
+  pos <- which(data$"axis" == "x")
+  if (length(pos) > 0) {
+    data[pos, "value"] <- paste0("-", data[pos, "value"])
   }
 
-  data$"value" <- answers
-  data$"side" <- gsub("\\(|\\)", "", data$"side")
-
-  data[1:2, "value"] <- paste0("-", data[1:2, "value"])
   data$"value" <- gsub("--", "-", data$"value")
+
+  data$"coord" <- as.numeric(data$"coord")
+  data$"value" <- as.numeric(data$"value")
 
   data
 }
@@ -98,18 +186,98 @@ locate_points <- function() {
 #'
 #' @noRd
 
+# xy_to_lonlat <- function(points, axes) {
+#   coords <- data.frame()
+#   for (i in 1:nrow(points)) {
+#     lon <- axes[1, "value"] +
+#       (points[i, "x"] - axes[1, "coord"]) *
+#         (axes[2, "value"] - axes[1, "value"]) /
+#         (axes[2, "coord"] - axes[1, "coord"])
+
+#     lat <- axes[3, "value"] +
+#       (points[i, "y"] - axes[3, "coord"]) *
+#         (axes[4, "value"] - axes[3, "value"]) /
+#         (axes[4, "coord"] - axes[3, "coord"])
+
+#     coords <- rbind(coords, data.frame(lon, lat))
+#   }
+
+#   data.frame(points, coords)
+# }
+
+#' Convert 'usr' coordinates to spatial coordinates
+#'
+#' @noRd
+
 xy_to_lonlat <- function(points, axes) {
   coords <- data.frame()
-  for (i in 1:nrow(points)) {
-    lon <- axes[1, "value"] +
-      (points[i, "x"] - axes[1, "coord"]) *
-        (axes[2, "value"] - axes[1, "value"]) /
-        (axes[2, "coord"] - axes[1, "coord"])
 
-    lat <- axes[3, "value"] +
-      (points[i, "y"] - axes[3, "coord"]) *
-        (axes[4, "value"] - axes[3, "value"]) /
-        (axes[4, "coord"] - axes[3, "coord"])
+  x_coords <- axes[axes[["axis"]] == "x", ]
+  x_coords <- x_coords[order(x_coords$"value", decreasing = FALSE), ]
+
+  y_coords <- axes[axes[["axis"]] == "y", ]
+  y_coords <- y_coords[order(y_coords$"value", decreasing = FALSE), ]
+
+  for (i in 1:nrow(points)) {
+    x_min <- NULL
+    x_max <- NULL
+
+    pos <- which(x_coords$"coord" <= points[i, "x"])
+
+    if (length(pos) > 0) {
+      x_min <- x_coords[pos, ]
+      x_min <- x_min[which.max(x_min$"coord"), ]
+    } else {
+      x_min <- x_coords[1, ]
+      x_max <- x_coords[2, ]
+    }
+
+    if (is.null(x_max)) {
+      pos <- which(x_coords$"coord" >= points[i, "x"])
+
+      if (length(pos) > 0) {
+        x_max <- x_coords[pos, ]
+        x_max <- x_max[which.min(x_max$"coord"), ]
+      } else {
+        x_max <- x_coords[nrow(x_coords), ]
+        x_min <- x_coords[nrow(x_coords) - 1, ]
+      }
+    }
+
+    y_min <- NULL
+    y_max <- NULL
+
+    pos <- which(y_coords$"coord" <= points[i, "y"])
+
+    if (length(pos) > 0) {
+      y_min <- y_coords[pos, ]
+      y_min <- y_min[which.max(y_min$"coord"), ]
+    } else {
+      y_min <- y_coords[1, ]
+      y_max <- y_coords[2, ]
+    }
+
+    if (is.null(y_max)) {
+      pos <- which(y_coords$"coord" >= points[i, "y"])
+
+      if (length(pos) > 0) {
+        y_max <- y_coords[pos, ]
+        y_max <- y_max[which.min(y_max$"coord"), ]
+      } else {
+        y_max <- y_coords[nrow(y_coords), ]
+        y_min <- y_coords[nrow(y_coords) - 1, ]
+      }
+    }
+
+    lon <- x_min[1, "value"] +
+      (points[i, "x"] - x_min[1, "coord"]) *
+        (x_max[1, "value"] - x_min[1, "value"]) /
+        (x_max[1, "coord"] - x_min[1, "coord"])
+
+    lat <- y_min[1, "value"] +
+      (points[i, "y"] - y_min[1, "coord"]) *
+        (y_max[1, "value"] - y_min[1, "value"]) /
+        (y_max[1, "coord"] - y_min[1, "coord"])
 
     coords <- rbind(coords, data.frame(lon, lat))
   }

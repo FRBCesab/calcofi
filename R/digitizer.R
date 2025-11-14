@@ -104,9 +104,6 @@ digitizer_core <- function(image, day_night) {
 
   axes <- locate_axes()
 
-  axes$"coord" <- as.numeric(axes$"coord")
-  axes$"value" <- as.numeric(axes$"value")
-
   cat("\n")
   cli::cli_h1("Point data")
   cat("\n")
