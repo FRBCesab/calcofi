@@ -233,7 +233,7 @@ xy_to_lonlat <- function(points, axes) {
     }
 
     if (is.null(x_max)) {
-      pos <- which(x_coords$"coord" >= points[i, "x"])
+      pos <- which(x_coords$"coord" > points[i, "x"])
 
       if (length(pos) > 0) {
         x_max <- x_coords[pos, ]
@@ -258,7 +258,7 @@ xy_to_lonlat <- function(points, axes) {
     }
 
     if (is.null(y_max)) {
-      pos <- which(y_coords$"coord" >= points[i, "y"])
+      pos <- which(y_coords$"coord" > points[i, "y"])
 
       if (length(pos) > 0) {
         y_max <- y_coords[pos, ]
@@ -271,13 +271,13 @@ xy_to_lonlat <- function(points, axes) {
 
     lon <- x_min[1, "value"] +
       (points[i, "x"] - x_min[1, "coord"]) *
-        ((x_max[1, "value"] + 0.0000001) - (x_min[1, "value"] - 0.0000001)) /
-        ((x_max[1, "coord"] + 0.0000001) - (x_min[1, "coord"] - 0.0000001))
+        (x_max[1, "value"] - x_min[1, "value"]) /
+        (x_max[1, "coord"] - x_min[1, "coord"])
 
     lat <- y_min[1, "value"] +
       (points[i, "y"] - y_min[1, "coord"]) *
-        ((y_max[1, "value"] + 0.0000001) - (y_min[1, "value"] - 0.0000001)) /
-        ((y_max[1, "coord"] + 0.0000001) - (y_min[1, "coord"] - 0.0000001))
+        (y_max[1, "value"] - y_min[1, "value"]) /
+        (y_max[1, "coord"] - y_min[1, "coord"])
 
     coords <- rbind(coords, data.frame(lon, lat))
   }
