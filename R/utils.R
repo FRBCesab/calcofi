@@ -271,13 +271,13 @@ xy_to_lonlat <- function(points, axes) {
 
     lon <- x_min[1, "value"] +
       (points[i, "x"] - x_min[1, "coord"]) *
-        (x_max[1, "value"] - x_min[1, "value"]) /
-        (x_max[1, "coord"] - x_min[1, "coord"])
+        ((x_max[1, "value"] + 0.0000001) - (x_min[1, "value"] - 0.0000001)) /
+        ((x_max[1, "coord"] + 0.0000001) - (x_min[1, "coord"] - 0.0000001))
 
     lat <- y_min[1, "value"] +
       (points[i, "y"] - y_min[1, "coord"]) *
-        (y_max[1, "value"] - y_min[1, "value"]) /
-        (y_max[1, "coord"] - y_min[1, "coord"])
+        ((y_max[1, "value"] + 0.0000001) - (y_min[1, "value"] - 0.0000001)) /
+        ((y_max[1, "coord"] + 0.0000001) - (y_min[1, "coord"] - 0.0000001))
 
     coords <- rbind(coords, data.frame(lon, lat))
   }
